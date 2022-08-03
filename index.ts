@@ -4,7 +4,9 @@ import {fetchBookings} from "./lib/booking";
 
 // Create GET route and return number of months from departure
 api.get("/bookings", async (req, res) => {
-    res.send(fetchBookings)
+    const bookings = await fetchBookings()
+    console.info(`Found ${bookings.length} bookings in Airtable`)
+    res.json(bookings)
 })
 
 api.get("/months", async (req, res) => {
