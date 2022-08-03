@@ -1,16 +1,12 @@
-import { api, data, schedule, params } from "@serverless/cloud";
+import utils from './lib/utils'
+import {api, params} from "@serverless/cloud"
 
 // Create GET route and return users
-api.get("/users", async (req, res) => {
-  // Get users from Serverless Data
-  let result = await data.get("user:*", true);
-  // Return the results
-  res.send({
-    users: result.items,
-  });
+api.get("/months", async (req, res) => {
+    let result = utils.monthDiff(new Date(), new Date('2023-03-26'))
+    // Return the results
+    res.send({
+        monthsToDeparture: result,
+    });
 });
 
-// Redirect to users endpoint
-api.get("/*", (req, res) => {
-  res.redirect("/users");
-});
