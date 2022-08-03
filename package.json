@@ -1,0 +1,19 @@
+{
+  "name": "crystal-monitor",
+  "version": "1.0.0",
+  "description": "Monitor Crystal Booking Website",
+  "main": "index.ts",
+  "type": "module",
+  "scripts": {
+    "start": "cloud",
+    "test": "cloud test"
+  },
+  "devDependencies": {
+    "@serverless/cloud": "^2.0.0",
+    "@types/jest": "^26.0.24"
+  },
+  "serverless": {
+    "app": "crystal-monitor",
+    "org": "owain"
+  }
+}
