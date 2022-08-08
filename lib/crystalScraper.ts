@@ -8,7 +8,7 @@ const CrystalScraper = {
     leadPassengerSurnameFieldSelector: "#name",
     loginButtonSelector: "#submit-button",
     logoutButtonSelector: "#Logout__component > div > div > div > a",
-    paymentHistorySelector: "#DirectDebit__component > div > div > div.UI__makePaymentContent > div > div.UI__directDebitAmountWrapper > div.UI__directDebitViewDetails > div > a",
+    paymentHistorySelector: "#DirectDebit__component > div > div > div.UI__makePaymentContent > div > div.UI__directDebitAmountWrapper > div.UI__directDebitWrapper > div > div",
     departureDateSelector: "#when",
     paymentDescriptionSelector: "body > div:nth-child(38) > div > section > section > div > div > div.scrollers__scroll.scrollers__hasVerticalScrollbar.scrollContent > div:nth-child(1) > div > div:nth-child(1) > div:nth-child(6)",
     modalCloseSelector: "body > div:nth-child(38) > div > section > section > header > span",
@@ -68,11 +68,7 @@ const CrystalScraper = {
         })
     },
 
-    async scraper(browser, booking) {
-        let data = []
-        let page = await browser.newPage()
-        console.log(`Navigating to ${this.url}...`)
-        await page.goto(this.url)
+    login: async function (page, booking) {
         await page.click(this.acceptCookiesSelector)
         const departureDate = new Date(booking['Departure Date'])
         const monthsInFuture = monthDiff(new Date(), departureDate)
@@ -86,8 +82,15 @@ const CrystalScraper = {
         }
         await page.click("#contentDiv > div > div.month > table > tbody > tr:nth-child(4) > td:nth-child(7)")
         await page.click(this.loginButtonSelector)
-        console.log("Logged in, loading booking information", booking.reference)
+        console.log("Logged in, loading booking information", booking.Reference)
         await page.waitForNavigation()
+    },
+
+    async scraper(browser, booking) {
+        let page = await browser.newPage()
+        console.log(`Navigating to ${this.url}...`)
+        await page.goto(this.url)
+        await this.login(page, booking)
         const passengers = await this.parsePassengers(page)
         const rooms = await this.parseRooms(page)
         console.log("Logged in, loading payment information")
@@ -98,9 +101,7 @@ const CrystalScraper = {
         await page.click(".components__close")
         console.log("Logging out of the booking", booking.reference)
         await page.click(this.logoutButtonSelector)
-        data.push({booking, passengers, txns, rooms})
-        console.log("saved booking information")
-        return data
+        return {booking, passengers, txns, rooms}
     }
 }
 
