@@ -27,8 +27,12 @@ schedule.every("1 hour", async () => {
     }))
 })
 
-events.on("booking.scrape.request", async ({body}) => {
+events.on("booking.scrape.request", async ({ body }) => {
     console.info('booking.scrape.request', body)
-});
+})
+
+events.on('booking.scrape.request', async ( {booking} ) => {
+    
+})
 
 

@@ -10,3 +10,6 @@ yarn-error.log*
 
 # macOS-specific files
 .DS_Store
+
+#live booking test data
+tests/unit/event_data.json
