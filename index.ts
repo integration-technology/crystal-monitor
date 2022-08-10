@@ -21,6 +21,13 @@ api.get("/months", async (req, res) => {
     })
 })
 
+api.post("/publish", async (req,res) => {
+    console.log('Publishing event:', JSON.stringify(req, null, 2))
+    const {message, topic} = req
+    const response = await events.publish(topic, message)
+    res.json(response)
+})
+
 
 schedule.every("4 hours", async () => {
     // This code block will run every hour!

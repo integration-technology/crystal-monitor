@@ -25,6 +25,6 @@
   "dependencies": {
     "airtable": "^0.11.4",
     "object-hash": "^3.0.0",
-    "puppeteer": "^16.0.0"
+    "puppeteer": "^16.1.0"
   }
 }
