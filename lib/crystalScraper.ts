@@ -99,7 +99,7 @@ const CrystalScraper = {
         const txns = await this.parseTransactions(page)
         console.log("Closing transaction modal")
         await page.click(".components__close")
-        console.log("Logging out of the booking", booking.reference)
+        console.log("Logging out of the booking", booking.Reference)
         await page.click(this.logoutButtonSelector)
         return {booking, passengers, txns, rooms}
     }
