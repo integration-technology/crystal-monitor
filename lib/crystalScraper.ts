@@ -13,6 +13,7 @@ const CrystalScraper = {
     paymentDescriptionSelector: "body > div:nth-child(38) > div > section > section > div > div > div.scrollers__scroll.scrollers__hasVerticalScrollbar.scrollContent > div:nth-child(1) > div > div:nth-child(1) > div:nth-child(6)",
     modalCloseSelector: "body > div:nth-child(38) > div > section > section > header > span",
     transactionSelector: "div.UI__priceDescription > div.UI__priceDetails",
+    calendarSelector: "#when",
 
     async parsePassengers(page) {
         const passengersViewComponent = await page.evaluate((varName) => window[varName], "passengerComponentJsonData")
@@ -76,7 +77,8 @@ const CrystalScraper = {
         await page.waitForSelector(this.bookingReferenceFieldsSelector, {timeout: 8000})
         await page.type(this.bookingReferenceFieldsSelector, booking.Reference)
         await page.type(this.leadPassengerSurnameFieldSelector, booking.Surname)
-        await page.click("#tui_widget_searchpanel_views_AmendDepartureDate_0 > div.cal-trigger")
+        await page.waitForSelector(this.calendarSelector, {timeout: 3000})
+        await page.click(this.calendarSelector)
         for (let i = 1; i <= monthsInFuture; i++) {
             await page.click("#contentDiv > div > div.month-navigator > a.next")
         }
@@ -88,6 +90,9 @@ const CrystalScraper = {
 
     async scraper(browser, booking) {
         let page = await browser.newPage()
+        await page.setUserAgent(
+          " Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.75 Safari/537.36 "
+        )
         console.log(`Navigating to ${this.url}...`)
         await page.goto(this.url)
         await this.login(page, booking)
