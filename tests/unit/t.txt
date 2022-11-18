@@ -1,0 +1,21 @@
+[
+"JSHandle:<span>Wed 29 Jun 2022</span><span class=\"UI__value\">£2000.00</span>",
+"JSHandle:<span>Sun 1 Jan 2023</span><span class=\"UI__value\">£18721.12</span>",
+"JSHandle:<span></span><span class=\"UI__value\"></span>",
+"JSHandle:<span>Basic Holiday</span><span class=\"UI__value\">£18042.00</span>",
+"JSHandle:<span>Online Discount</span><span class=\"UI__value\">-£1000.00</span>",
+"JSHandle:<span>Promotional Discount</span><span class=\"UI__value\">-£3418.88</span>",
+"JSHandle:<span>13 x Helmet (6 days) </span><span class=\"UI__value\">£286.00</span>",
+"JSHandle:<span>18 x Ski boots (6 days) </span><span class=\"UI__value\">£666.00</span>",
+"JSHandle:<span>19 x Standard skis  (6 days) </span><span class=\"UI__value\">£1159.00</span>",
+"JSHandle:<span>6 x Area lift pass - International (6 days) </span><span class=\"UI__value\">£1824.00</span>",
+"JSHandle:<span>7 x Area lift pass - International (6 days) </span><span class=\"UI__value\">£1918.00</span>",
+"JSHandle:<span>2 x Area lift pass - International (6 days) </span><span class=\"UI__value\">£426.00</span>",
+"JSHandle:<span>2 x Local lift pass  (6 days) </span><span class=\"UI__value\">£454.00</span>",
+"JSHandle:<span>1 x Local lift pass  (6 days) </span><span class=\"UI__value\">£205.00</span>",
+"JSHandle:<span>1 x Local lift pass  (6 days) </span><span class=\"UI__value\">£160.00</span>",
+"JSHandle:<span>Total Price</span><span class=\"UI__value\">£20721.12</span>",
+"JSHandle:<span class=\"UI__paidText UI__innerTitle\">Total paid to date</span><span class=\"UI__paidValue\">£2000.00</span>",
+"JSHandle:<span class=\"UI__paidText\">Total outstanding balance</span><b class=\"UI__details__total\">£<span class=\"UI__details__totalScaled\">18721</span><span>.12</span></b>",
+"JSHandle:<span class=\"UI__paidText\"></span><span class=\"UI__paidValue\"></span>"
+]

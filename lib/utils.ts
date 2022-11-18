@@ -1,4 +1,3 @@
-import {params} from "@serverless/cloud"
 
 export function monthDiff(dateFrom: Date, dateTo: Date): number {
     return dateTo.getMonth() - dateFrom.getMonth() +
