@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "airtable": "^0.11.5",
+    "node-jq": "^2.3.4",
     "object-hash": "^3.0.0",
     "puppeteer": "^19.2.2",
     "puppeteer-core": "^19.2.2",

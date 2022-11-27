@@ -15,9 +15,14 @@ import CrystalScraper from "./lib/crystalScraper"
     console.error('Failed to access the Aitable bookings', e)
   }
   const browser = await Browser.start(false)
-  const results = await CrystalScraper.scraper(browser, bookings[0])
-
-
+  let results = []
+  bookings[0]['first'] = true
+  for (const booking of bookings) {
+    console.log(JSON.stringify(booking, null, 2))
+    results.push(await CrystalScraper.scraper(browser, booking))
+  }
+  await Browser.close(browser)
+  console.log(results)
 })()
 
 

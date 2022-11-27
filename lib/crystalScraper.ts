@@ -1,7 +1,10 @@
 import {monthDiff} from "./utils"
 import {parseSpans, transaction} from './parseSpans'
+import {parseAncillaries} from "./parseAncillary"
 
 
+// @ts-ignore
+// @ts-ignore
 const CrystalScraper = {
   url: "https://www.crystalski.co.uk/ski-holidays/your-account/managemybooking/login/",
   acceptCookiesSelector: "#cmCloseBanner",
@@ -20,14 +23,17 @@ const CrystalScraper = {
   async parsePassengers(page) {
     const passengersViewComponent = await page.evaluate((varName) => window[varName], "passengerComponentJsonData")
     return passengersViewComponent.passengerViewData.map(p => {
+      const ancillaries = parseAncillaries(p.passengerExtraFacilityViewData.skiAncillaryDescriptionList)
       return {
-        lastName: p.lastName,
-        fullName: p.passengerLabel,
-        firstName: p.firstName,
-        dateofbirth: p.dateofbirth,
-        age: p.age,
-        handLuggage: p.passengerExtraFacilityViewData.handLuggageDescription,
-        holdLuggage: p.passengerExtraFacilityViewData.luggageDescription
+        ...{
+          lastName: p.lastName,
+          fullName: p.passengerLabel,
+          firstName: p.firstName,
+          dateofbirth: p.dateofbirth,
+          age: p.age,
+          handLuggage: p.passengerExtraFacilityViewData.handLuggageDescription,
+          holdLuggage: p.passengerExtraFacilityViewData.luggageDescription
+        }, ...{ ancillaries }
       }
     })
   },
@@ -52,7 +58,7 @@ const CrystalScraper = {
   },
 
   parseTransactions: async function (page): Promise<transaction[]> {
-    const transactions = await page.$$(this.transactionSelector)
+    const transactions = await page.$$(this.transactionSelector, {timeout: 14000})
     const spans: string[] = await Promise.all(transactions.map(async txn => {
       const innerHtmlElement = await txn.getProperty("innerHTML")
       return innerHtmlElement.toString()
@@ -61,7 +67,9 @@ const CrystalScraper = {
   },
 
   login: async function (page, booking) {
-    await page.click(this.acceptCookiesSelector)
+    if (booking['first'] == true) {
+      await page.click(this.acceptCookiesSelector)
+    }
     const departureDate = new Date(booking['Departure Date'])
     const monthsInFuture = monthDiff(new Date(), departureDate)
     console.log('Months in the future:', monthsInFuture)
@@ -87,7 +95,12 @@ const CrystalScraper = {
     console.log(`Navigating to ${this.url}...`)
     await page.goto(this.url)
     await this.login(page, booking)
-    const passengers = await this.parsePassengers(page)
+    let passengers
+    try {
+      passengers = await this.parsePassengers(page)
+    } catch (e) {
+      throw (e)
+    }
     const rooms = await this.parseRooms(page)
     console.log("Loading payment information")
     await page.click(this.paymentHistorySelector)
@@ -99,7 +112,11 @@ const CrystalScraper = {
     await page.click(".components__close")
     console.log("Logging out of the booking", booking.Reference)
     await page.click(this.logoutButtonSelector)
-    return {booking, passengers, txns, rooms}
+    const summary = {
+      pax: passengers.length, rooms: rooms.length
+    }
+    const summaryBooking = {...booking, ...summary}
+    return {summaryBooking, passengers, txns, rooms}
   }
 }
 

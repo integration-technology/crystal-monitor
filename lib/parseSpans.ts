@@ -23,7 +23,7 @@ export function parseSpans(spans: string[]): transaction[] {
       throw(`Description parse failure: ${t}`)
     }
     return {
-      description: description === "Sun 30 Jan 2022" ? `Balance due ${description}` : description,
+      description: description === "Sun 1 Jan 2023" ? `Balance due ${description}` : description,
       amount
     }
   })
