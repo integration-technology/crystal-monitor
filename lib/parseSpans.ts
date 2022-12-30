@@ -15,10 +15,11 @@ export function parseSpans(spans: string[]): transaction[] {
       throw(`Value parse failure:${t}`)
     }
     const amount = parseFloat(amountString.replace(/£/g, ""))
-    const descriptionRegex = /([A-Za-z\d\s\(\)\-]+)<\/span></gm
+    const descriptionRegex = /([A-Za-z\d\s\(\)\-\&\;\%]+)<\/span></gm
     let description: string
     try {
-      description = descriptionRegex.exec(t)[1]
+      t.replace('&amp;', '&')
+      description = descriptionRegex.exec(t)[1].trim().replace(/&amp./g, "&")
     } catch (e) {
       throw(`Description parse failure: ${t}`)
     }

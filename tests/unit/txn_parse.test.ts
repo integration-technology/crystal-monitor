@@ -5,7 +5,7 @@ const spans = require('./span_data.json')
 describe("Parse some sample transactions from scrape", () => {
 
   test("Load spans from input file correctly", () => {
-    expect(spans).toHaveLength(19)
+    expect(spans).toHaveLength(20)
   })
 
   test("Parse a single transaction", () => {
@@ -41,9 +41,16 @@ describe("Parse some sample transactions from scrape", () => {
     expect(results).toHaveLength(0)
   })
 
+  test("Parse ampersand in row 20", () => {
+    const data: [string] = [spans[19]]
+    const results = parseSpans(data)
+    expect(results).toHaveLength(1)
+    expect(results[0].description).toEqual("1 x 20% off lift passes & equipment for groups")
+  })
+
   test("Parse all transactions", () => {
     const results = parseSpans(spans)
-    expect(results).toHaveLength(17)
+    expect(results).toHaveLength(18)
   })
 
 })

@@ -17,5 +17,6 @@
     "JSHandle:<span>Total Price</span><span class=\"UI__value\">£20721.12</span>",
     "JSHandle:<span class=\"UI__paidText UI__innerTitle\">Total paid to date</span><span class=\"UI__paidValue\">£2000.00</span>",
     "JSHandle:<span class=\"UI__paidText\">Total outstanding balance</span><b class=\"UI__details__total\">£<span class=\"UI__details__totalScaled\">18721</span><span>.12</span></b>",
-    "JSHandle:<span class=\"UI__paidText\"></span><span class=\"UI__paidValue\"></span>"
+    "JSHandle:<span class=\"UI__paidText\"></span><span class=\"UI__paidValue\"></span>",
+    "JSHandle:<span>1 x 20% off lift passes &amp; equipment for groups  </span><span class=\"UI__value\">-£44.00</span>"
 ]
