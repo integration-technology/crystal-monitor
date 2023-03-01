@@ -4,7 +4,6 @@ import {parseAncillaries} from "./parseAncillary"
 
 
 // @ts-ignore
-// @ts-ignore
 const CrystalScraper = {
   url: "https://www.crystalski.co.uk/ski-holidays/your-account/managemybooking/login/",
   acceptCookiesSelector: "#cmCloseBanner",
@@ -19,6 +18,7 @@ const CrystalScraper = {
   // transactionSelector: "div.UI__priceDescription > div.UI__priceDetails",
   transactionSelector: "div.UI__priceDetails",
   calendarSelector: "#when",
+  uiRoomCard :"div.UI__roomCard",
 
   async parsePassengers(page) {
     const passengersViewComponent = await page.evaluate((varName) => window[varName], "passengerComponentJsonData")
@@ -32,14 +32,16 @@ const CrystalScraper = {
           dateofbirth: p.dateofbirth,
           age: p.age,
           handLuggage: p.passengerExtraFacilityViewData.handLuggageDescription,
-          holdLuggage: p.passengerExtraFacilityViewData.luggageDescription
+          holdLuggage: p.passengerExtraFacilityViewData.luggageDescription,
+          skiCarriage: p.passengerExtraFacilityViewData?.carriagesList?.[0]
         }, ...{ ancillaries }
       }
     })
   },
 
   async parseRooms(page) {
-    const rooms = await page.$$("div.UI__roomCard")
+    await page.waitForSelector(this.uiRoomCard, {timeout: 3000})
+    const rooms = await page.$$(this.uiRoomCard)
     console.log("Room count:", rooms.length)
     const spans = await Promise.all(rooms.map(async room => {
       const nameElement = await room.$("h4 > span")
